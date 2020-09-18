@@ -7,7 +7,7 @@ API_KEY = ""
 GEO_HOST = "localhost"
 
 # port number for access of Geonames search service
-GEO_PORT = "8092"
+GEO_PORT = "8091"
 
 # GenBank accession records can be retrieved in multiples but fails if too many are requested
 # the following allows the accessions to be retrieved in batches. Max size seems to be somewhere between 250 or 400.
