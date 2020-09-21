@@ -368,7 +368,7 @@ class GenBankRequest(object):
             url = GB_PUBMED_LINK_URL.replace("IDPH", "&id=".join(batch_accessions))
             resp = http_get_query(url, timeout=20, retries=2)
             if resp and resp.text:
-                jsonobj = json.loads(resp.text)
+                jsonobj = json.loads(resp.text, strict=False)
                 if "linksets" in jsonobj:
                     for linkset in jsonobj["linksets"]:
                         if "linksetdbs" in linkset:
@@ -388,7 +388,7 @@ class GenBankRequest(object):
             url = GB_PMC_LINK_URL.replace("IDPH", "&id=".join(batch_accessions))
             resp = http_get_query(url, timeout=20, retries=2)
             if resp and resp.text:
-                jsonobj = json.loads(resp.text)
+                jsonobj = json.loads(resp.text, strict=False)
                 if "linksets" in jsonobj:
                     for linkset in jsonobj["linksets"]:
                         if "linksetdbs" in linkset:
@@ -410,7 +410,7 @@ class GenBankRequest(object):
             url = PM_PMC_LINK_URL.replace("IDSPH", ",".join(pmcids))
             resp = http_get_query(url, timeout=20, retries=3)
             if resp and resp.text:
-                jsonobj = json.loads(resp.text)
+                jsonobj = json.loads(resp.text, strict=False)
                 if "records" in jsonobj:
                     for record in jsonobj["records"]:
                         # we need an additional check as sometimes the key pmid does't exist
