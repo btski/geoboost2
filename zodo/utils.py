@@ -251,8 +251,13 @@ def download_supplemental(raw_json):
 def extract_text_from_files(pmcdir):
     supp_files = [x for x in listdir(pmcdir) if x.split(".")[-1] in SUPPLEMENTAL_DATA_FILETYPES]
     logging.debug("Files for extraction in %s : %s", pmcdir, ",".join(supp_files))
-    # For now just extract all text the same way using textract
-    supp_file_contents = {x:str(textract.process(join(pmcdir, x))).replace("\\n", "\n") for x in supp_files}
+    # For now just extract all text the same way using textract (textract may fail)
+    supp_file_contents = {}
+    for suppfile in supp_files:
+        try:
+            supp_file_contents[suppfile] = str(textract.process(join(pmcdir, suppfile))).replace("\\n", "\n")
+        except Exception as e:
+            logging.error("Error in textract: %s", e)
     supp_contents = ""
     for suppfile, content in supp_file_contents.items():
         supp_contents += "\n\n*** " + str(suppfile) + " ***\n" + str(content)
